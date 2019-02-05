@@ -23,13 +23,14 @@ class ArticleController extends ApiController
     public function store(Request $request)
     {
         $rules = [
-            'internalCode' => 'required|unique:articles', 
-            'name' => 'required|unique:articles',
+            'internalCode' => 'required|unique:articles|max:12', 
+            'name' => 'required|max:60',
             'shortName' => 'nullable',
-            'description' => 'required',
+            'description' => 'required|max:250',
             'stock' => 'required|regex:/^^[0-9]*$/',
             'purchasePrice' => 'nullable',
             'salePrice' => 'nullable|regex:/^\d{0,2}(\.\d{1,2})?/',
+            'offerPrice' => 'nullable'
         ];
       
         $this->validate($request, $rules);
@@ -38,28 +39,44 @@ class ArticleController extends ApiController
     }
     public function update(Request $request, Article $article)
     {
-        $article->fill($request->only([ 
+        $article->fill($request->only([
+            'id', 
             'internalCode',
             'name',
+            'shortName',
             'stock',
             'purchasePrice',
             'salePrice',
+            'offerSale'
         ]));
-
-        if ($article->isClean()) { // is la instancia no ha cambiado o no se ha actualizado ningún valor
+        $_article = Article::find($article->id);
+            
+        if($_article->internalCode != $article->internalCode){
+            $rules = [
+                'internalCode' => 'required|unique:articles|max:12', 
+                'name' => 'required|max:60',
+                'shortName' => 'nullable',
+                'description' => 'required|max:250',
+                'stock' => 'required|regex:/^^[0-9]*$/',
+                'purchasePrice' => 'nullable|regex:/^\d{0,2}(\.\d{1,2})?/',
+                'salePrice' => 'nullable|regex:/^\d{0,2}(\.\d{1,2})?/',
+                'offerSale' => 'nullable|regex:/^\d{0,2}(\.\d{1,2})?/'
+            ];
+        }else{
+            $rules = [
+                'name' => 'required|max:60',
+                'shortName' => 'nullable',
+                'description' => 'required|max:250',
+                'stock' => 'required|regex:/^^[0-9]*$/',
+                'purchasePrice' => 'nullable|regex:/^\d{0,2}(\.\d{1,2})?/',
+                'salePrice' => 'nullable|regex:/^\d{0,2}(\.\d{1,2})?/',
+                'offerSale' => 'nullable|regex:/^\d{0,2}(\.\d{1,2})?/'
+            ];
+        }
+        
+        if ($article->isClean()) { 
             return $this->errorResponse('Debe especificar al menos un valor diferente', 422);
         }
-       
-            $rules = [
-                'internalCode' => 'required|unique:articles', 
-                'name' => 'required|unique:articles',
-                'shortName' => 'nullable',
-                'stock' => 'required|regex:/^^[0-9]*$/',
-                'purchasePrice' => 'nullable',
-                'salePrice' => 'nullable|regex:/^\d{0,2}(\.\d{1,2})?/',
-            ];
-        
-
         $this->validate($request, $rules);
 
         $article->save();

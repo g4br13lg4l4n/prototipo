@@ -16,7 +16,7 @@ class CreateArticlesTable extends Migration
         Schema::create('articles', function (Blueprint $table) {
             $table->increments('id');
             $table->string('internalCode',12);
-            $table->string('name',60)->unique();
+            $table->string('name',60);
             $table->char('shortName',20)->nullable();
             $table->char('description',250);
             $table->integer('stock');
