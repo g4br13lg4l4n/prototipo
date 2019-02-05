@@ -3,83 +3,77 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class CategoryController extends ApiController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    /**GET */
     public function index()
     {
-        //
+        $category = Category::all();
+        $category = $category->sortBy('genericCode');
+        return $this->showAll($category);
+    }
+    /**GET */
+    public function show(Category $category){
+        return $this->showOne($category);
+    }
+    /**POST */
+    public function store(Request $request){
+        $_category = new Category();
+        $_level = 0;
+
+        $_genericCode = $this->generationCode( $request->input('parent'));
+        $request->request->add(['genericCode' => $_genericCode]);
+        
+        $_level = $this->getLevel( $request->input('genericCode'));
+        $request->request->add(['level' => $_level]);
+
+        $rules = [
+            'genericCode' => 'required|unique:categories',
+            'category' => 'required|max:50',
+            'shortName' => 'required|max:20',
+            'description' => 'max:150',
+            'level' => 'required'
+        ];
+        $this->validate($request, $rules);      
+        $category = Category::create( $request->all() ); 
+        return $this->showOne($category);
+    }
+    
+    public function update(Request $request, Category $category){
+     
+    }
+    public function destroy(Category $category){
+        
+    }
+    public function generationCode($parent)
+    {
+        $_genericCode = "";
+        $_children = 0;
+
+        if($parent){
+            $_category =  DB::table('categories')
+            ->where('genericCode', 'like', ''.$parent.'.%')
+            ->get();
+
+            $_children = $_category->count();    
+            $_genericCode = ($parent.".".($_children +1) );  
+        }else{
+            $_category =  DB::table('categories')
+                    ->where('genericCode', 'not like', '%.%')
+                    ->get();
+
+            $_children = $_category->count();    
+            $_genericCode = (string)($_children + 1);
+        }
+             
+        return $_genericCode;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Category $category)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Category $category)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Category $category)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Category $category)
-    {
-        //
+    public function getLevel($genericCode){
+        $levels = explode(".", $genericCode);
+        return sizeof($levels);
     }
 }

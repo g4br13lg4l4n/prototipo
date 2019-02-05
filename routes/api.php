@@ -17,14 +17,17 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('client','ClientController',[
-    "only" => ["index","show","store","update","destroy"]
-]);
-
 Route::resource('article','ArticleController',[
     "only" => ["index","show","store","update","destroy"]
 ]);
 
+Route::resource('category','CategoryController',[
+    "only" => ["index","show","store","update","destroy"]
+]);
+
+Route::resource('client','ClientController',[
+    "only" => ["index","show","store","update","destroy"]
+]);
 Route::resource('rol','RolController',[
      "only" => ["index","show","store","update","destroy"]
 ]);
