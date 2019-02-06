@@ -17,4 +17,10 @@ class Article extends Model
         'offerPrice',
         'status'
     ];
+
+
+    public function images()
+    {
+        return $this->hasMany('App\ArticleImage');
+    }
 }

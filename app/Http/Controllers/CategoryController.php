@@ -21,7 +21,7 @@ class CategoryController extends ApiController
     }
     /**POST */
     public function store(Request $request){
-        $_category = new Category();
+        
         $_level = 0;
 
         $_genericCode = $this->generationCode( $request->input('parent'));
