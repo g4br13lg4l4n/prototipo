@@ -29,6 +29,9 @@ Route::resource('client','ClientController',[
     "only" => ["index","show","store","update","destroy"]
 ]);
 Route::resource('rol','RolController',[
-     "only" => ["index","show","store","update","destroy"]
+    "only" => ["index","show","store","update","destroy"]
 ]);
 
+Route::resource('users', 'User\UserController', [
+    'except' => ['create', 'edit']
+]);
