@@ -17,7 +17,7 @@ class CreateCategoriesTable extends Migration
             $table->increments('id');
             $table->string('genericCode',12)->unique();
             $table->string('category',50);
-            $table->string('shortName',15);
+            $table->string('shortName',15)->nullable();
             $table->string('description',120);
             $table->integer('level');
             $table->timestamps();
