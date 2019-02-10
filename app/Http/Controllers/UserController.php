@@ -23,4 +23,10 @@ class UserController extends ApiController
         $user->delete();
         return $this->showOne($user, 201);
     }
+
+    public function login (Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+        
+    }
 }
