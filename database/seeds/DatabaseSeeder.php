@@ -1,6 +1,7 @@
 <?php
 
 use App\User;
+use App\Article;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,6 +14,8 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $cantidadUsuarios = 10;
+        $catidadArticulos = 200;
         factory(User::class, $cantidadUsuarios)->create();
+        factory(Article::class, $catidadArticulos)->create();
     }
 }
