@@ -2,33 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use App\Action;
+use App\SaleDetail;
 use Illuminate\Http\Request;
 
-class ActionController extends Controller
+class SaleDetailController extends Controller
 {
-
+   
     public function index()
     {
         //
     }
-
+  
     public function store(Request $request)
     {
         //
     }
 
-    public function show(Action $action)
+    public function show(SaleDetail $saleDetail)
     {
         //
     }
 
-    public function update(Request $request, Action $action)
+    public function update(Request $request, SaleDetail $saleDetail)
     {
         //
     }
 
-    public function destroy(Action $action)
+    public function destroy(SaleDetail $saleDetail)
     {
         //
     }
