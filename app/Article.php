@@ -23,4 +23,9 @@ class Article extends Model
     {
         return $this->hasMany('App\ArticleImage');
     }
+
+    public function categories(){
+         return $this->belongsToMany('App\Category', 'articles_categories', 'article_id', 'category_id');
+    }
+
 }
