@@ -16,14 +16,16 @@ class ArticleController extends ApiController
     
     public function index()
     {
-        $article = Article::all();
+        $article = Article::with('categories')->get();
         return $this->showAll($article);
     }
 
        
     public function show(Article $article)
     {
-        return $this->showOne($article);
+       $article = Article::find($article->id);
+       $article->load('categories'); 
+       return $this->showOne($article);
     }
 
     public function store(Request $request)
