@@ -1,6 +1,8 @@
 <?php
 use App\User;
 use App\Article;
+use App\Category;
+use App\Http\Controllers\CategoryController;
 use Faker\Generator as Faker;
 
 /*
@@ -36,5 +38,18 @@ $factory->define(Article::class, function(Faker $faker){
         'salePrice' => 500,
         'offerPrice' => 400,
         'status' => $faker->randomElement(['Visible', 'Borrador', 'Oculto'])
+    ];
+});
+
+$factory->define(Category::class, function(Faker $faker ){
+    $categoryController = new CategoryController();
+    $genericCode = $categoryController->generationCode("");
+    $level = 1;
+    return [
+        'genericCode' => $genericCode,
+        'category' => "Categoria_".$genericCode,
+        'shortName' =>"Cat_".$genericCode,
+        'description' => str_random(30),
+        'level' => $level
     ];
 });
