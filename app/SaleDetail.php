@@ -12,4 +12,9 @@ class SaleDetail extends Model
         'quantity',
         'amount'
     ];
+    
+    public function sale()
+    {
+        return $this->belongsTo('App\Sale');
+    }
 }

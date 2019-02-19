@@ -23,6 +23,10 @@ class Sale extends Model
 
 
     public function saleDetails(){
-        return hasToMany('app/SaleDetail');
+        return hasMany('app/SaleDetail');
+    }
+
+    public function client(){
+        return $this->belongsTo('App\Client');
     }
 }
