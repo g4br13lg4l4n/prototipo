@@ -3,6 +3,7 @@ use App\User;
 use App\Article;
 use App\Category;
 use App\Client;
+use App\Sale;
 use App\Http\Controllers\CategoryController;
 use Faker\Generator as Faker;
 
@@ -62,5 +63,19 @@ $factory->define(Client::class, function(Faker $faker ){
         'email' => $faker->unique()->safeEmail,
         'password' => bcrypt("secret"),
         'status' =>  $faker->randomElement(['Activo', 'Inactivo',])
+    ];
+});
+
+$factory->define(Sale::class, function(Faker $faker ){
+    return [
+        'folio' => $faker->numberBetween(1000, 2000),
+        'saleDate'=> $faker->dateTime($max = 'now') ,
+      //  'payDate' =>,
+      //  'cancellationDate' =>,
+        'previousAmount' => 0,
+        'tax' => 0,
+        'amount' => 0,
+        'saleStatus' =>  $faker->randomElement(['Pendiente', 'Pagado',]),
+        'shippingStatus' =>  $faker->randomElement(['En Proceso', 'Entregado',]),
     ];
 });

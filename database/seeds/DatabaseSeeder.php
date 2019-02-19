@@ -5,6 +5,7 @@ use App\Article;
 use App\Category;
 use App\ArticleCategory;
 use App\Client;
+use App\Sale;
 use App\Http\Controllers\CategoryController;
 use Illuminate\Database\Seeder;
 
@@ -53,6 +54,6 @@ class DatabaseSeeder extends Seeder
         });      
         
         factory(Client::class,$cantidadClientes)->create();  
-        
+        factory(Sale::class,$cantidadClientes)->create();  
     }
 }
