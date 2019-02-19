@@ -2,6 +2,7 @@
 use App\User;
 use App\Article;
 use App\Category;
+use App\Client;
 use App\Http\Controllers\CategoryController;
 use Faker\Generator as Faker;
 
@@ -51,5 +52,15 @@ $factory->define(Category::class, function(Faker $faker ){
         'shortName' =>"Cat_".$genericCode,
         'description' => str_random(30),
         'level' => $level
+    ];
+});
+
+$factory->define(Client::class, function(Faker $faker ){
+    return [
+        'name' => $faker->name,
+        'lastName' => $faker->lastName,
+        'email' => $faker->unique()->safeEmail,
+        'password' => bcrypt("secret"),
+        'status' =>  $faker->randomElement(['Activo', 'Inactivo',])
     ];
 });
