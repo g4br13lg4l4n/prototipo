@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sale extends Model
 {
-    //
+    protected $table = 'sales';
+    
     protected $fillable = [
         'id', 
         'folio',
@@ -19,4 +20,9 @@ class Sale extends Model
         'saleStatus',
         'shippingStatus',
     ];
+
+
+    public function saleDetails(){
+        return hasToMany('app/SaleDetail');
+    }
 }
