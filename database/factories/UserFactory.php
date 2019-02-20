@@ -78,6 +78,7 @@ $factory->define(Sale::class, function(Faker $faker ){
         'amount' => 0,
         'saleStatus' =>  $faker->randomElement(['Pendiente', 'Pagado',]),
         'shippingStatus' =>  $faker->randomElement(['En Proceso', 'Entregado',]),
+        'client_id' => Client::inRandomOrder()->first()->id,
     ];
 });
 
