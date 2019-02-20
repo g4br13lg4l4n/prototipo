@@ -4,6 +4,7 @@ use App\Article;
 use App\Category;
 use App\Client;
 use App\Sale;
+use App\SaleDetail;
 use App\Http\Controllers\CategoryController;
 use Faker\Generator as Faker;
 
@@ -68,7 +69,7 @@ $factory->define(Client::class, function(Faker $faker ){
 
 $factory->define(Sale::class, function(Faker $faker ){
     return [
-        'folio' => $faker->numberBetween(1000, 2000),
+        'folio' => $faker->unique()->numberBetween(1000, 2000),
         'saleDate'=> $faker->dateTime($max = 'now') ,
       //  'payDate' =>,
       //  'cancellationDate' =>,
@@ -77,5 +78,15 @@ $factory->define(Sale::class, function(Faker $faker ){
         'amount' => 0,
         'saleStatus' =>  $faker->randomElement(['Pendiente', 'Pagado',]),
         'shippingStatus' =>  $faker->randomElement(['En Proceso', 'Entregado',]),
+    ];
+});
+
+
+
+$factory->define(SaleDetail::Class, function(Faker $faker){
+    return[
+        'quantity' => $faker->numberBetween(1, 100),
+        'amount'=> $faker->randomFloat($nbMaxDecimals = NULL, $min = 10, $max = NULL), 
+        'article_id' => Article::inRandomOrder()->first()->id,
     ];
 });

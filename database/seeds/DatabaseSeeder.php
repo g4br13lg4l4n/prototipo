@@ -6,6 +6,7 @@ use App\Category;
 use App\ArticleCategory;
 use App\Client;
 use App\Sale;
+use App\SaleDetail;
 use App\Http\Controllers\CategoryController;
 use Illuminate\Database\Seeder;
 
@@ -23,6 +24,8 @@ class DatabaseSeeder extends Seeder
         $cantidadArticulos = 10;
         $cantidadCategorias = 10;
         $cantidadClientes = 10;
+        $cantidadVentas = 100;
+        $cantidadVentasDetalles = 3;
         $categoryController = new CategoryController();
 
         factory(User::class, $cantidadUsuarios)->create();
@@ -49,11 +52,14 @@ class DatabaseSeeder extends Seeder
         
         factory(Article::class,$cantidadArticulos)->create()->each(function($article){
             $article->categories()->attach([
-                 rand(1,10)
+                Category::inRandomOrder()->first()->id
             ]);
         });      
-        
+
         factory(Client::class,$cantidadClientes)->create();  
-        factory(Sale::class,$cantidadClientes)->create();  
+        
+        $sale = factory(Sale::class,$cantidadVentas)->create()->each(function ($sale) {
+            $sale->salesDetails()->save(factory(SaleDetail::class)->make());
+        });
     }
 }
