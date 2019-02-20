@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Carbon\Carbon;
 use Laravel\Passport\Passport;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -27,5 +28,15 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Passport::routes();
+        Passport::tokensExpireIn(Carbon::now()->addMinutes(30));
+        Passport::refreshTokensExpireIn(Carbon::now()->addDays(30));
+        //Passport::enableImplicitGrant();
+
+        Passport::tokensCan([
+            'purchase-article' => 'Crear transacciones para comprar productos',
+            'manage-products' => 'Crear, ver, actualizar y eliminar productos',
+            'manage-account' => 'Obtener información de la cuenta, nombre, email, estado (Sin contraseña), modificar datos como email, nombre y contraseña. No puede eliminar la cuenta',
+            'read-general' => 'Obtener la información en general, categorías en la que se compra y se vende, productos vendidos o comprados, transacciones, compras y ventas'
+        ]);
     }
 }

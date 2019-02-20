@@ -8,17 +8,24 @@ use Illuminate\Http\Request;
 
 class ArticleController extends ApiController
 {
+    public function __construct()
+    {
+        $this->middleware('client.credentials')->only(['index', 'show']);
+        $this->middleware('auth:api')->except(['index', 'show']);
+    }
     
     public function index()
     {
-        $article = Article::all();
+        $article = Article::with('categories')->get();
         return $this->showAll($article);
     }
 
        
     public function show(Article $article)
     {
-        return $this->showOne($article);
+       $article = Article::find($article->id);
+       $article->load('categories'); 
+       return $this->showOne($article);
     }
 
     public function store(Request $request)

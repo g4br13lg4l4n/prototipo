@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
 {
+    protected $table = 'articles';
+
     protected $fillable = [
         'internalCode', 
         'name',
@@ -23,4 +25,9 @@ class Article extends Model
     {
         return $this->hasMany('App\ArticleImage');
     }
+
+    public function categories(){
+         return $this->belongsToMany('App\Category', 'articles_categories', 'article_id', 'category_id');
+    }
+
 }

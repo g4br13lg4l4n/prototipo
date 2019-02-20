@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Action;
+use App\Sale;
 use Illuminate\Http\Request;
 
-class ActionController extends Controller
+class SaleController extends Controller
 {
-
     public function index()
     {
         //
@@ -18,17 +17,17 @@ class ActionController extends Controller
         //
     }
 
-    public function show(Action $action)
+    public function show(Sales $sales)
     {
         //
     }
 
-    public function update(Request $request, Action $action)
+    public function update(Request $request, Sales $sales)
     {
         //
     }
 
-    public function destroy(Action $action)
+    public function destroy(Sales $sales)
     {
         //
     }
