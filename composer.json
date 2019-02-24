@@ -14,7 +14,8 @@
         "laravel/cashier": "^9.0",
         "laravel/framework": "5.7.*",
         "laravel/passport": "^7.1",
-        "laravel/tinker": "^1.0"
+        "laravel/tinker": "^1.0",
+        "smartins/passport-multiauth": "^4.0"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
