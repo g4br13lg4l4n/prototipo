@@ -32,7 +32,7 @@ $factory->define(User::class, function (Faker $faker) {
 
 $factory->define(Article::class, function(Faker $faker){
     return [
-        'internalCode' => $faker->numberBetween(5000, 100000),
+        'internalCode' => $faker->uuid,
         'name' => $faker->word,
         'shortName' => $faker->name,
         'description' => $faker->paragraph(1),
@@ -44,10 +44,9 @@ $factory->define(Article::class, function(Faker $faker){
     ];
 });
 
-$factory->define(Category::class, function(Faker $faker ){
-    $categoryController = new CategoryController();
-    $genericCode = $categoryController->generationCode("");
+$factory->define(Category::class, function(Faker $faker){
     $level = 1;
+    $genericCode = $faker->ean8;
     return [
         'genericCode' => $genericCode,
         'category' => "Categoria_".$genericCode,
@@ -63,7 +62,7 @@ $factory->define(Client::class, function(Faker $faker ){
         'lastName' => $faker->lastName,
         'email' => $faker->unique()->safeEmail,
         'password' => bcrypt("secret"),
-        'status' =>  $faker->randomElement(['Activo', 'Inactivo',])
+        'status' =>  $faker->randomElement(['Activo', 'Inactivo'])
     ];
 });
 
@@ -78,7 +77,7 @@ $factory->define(Sale::class, function(Faker $faker ){
         'amount' => 0,
         'saleStatus' =>  $faker->randomElement(['Pendiente', 'Pagado',]),
         'shippingStatus' =>  $faker->randomElement(['En Proceso', 'Entregado',]),
-        'client_id' => Client::inRandomOrder()->first()->id,
+        'client_id' => Client::all()->random()->id,
     ];
 });
 

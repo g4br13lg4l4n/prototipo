@@ -1,13 +1,12 @@
 <?php
 
+use App\Sale;
 use App\User;
+use App\Client;
 use App\Article;
 use App\Category;
-use App\ArticleCategory;
-use App\Client;
-use App\Sale;
 use App\SaleDetail;
-use App\Http\Controllers\CategoryController;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -19,46 +18,37 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+
+        User::truncate();
+        Category::truncate();
+        Article::truncate();
+        Sale::truncate();
+        DB::table('article_category')->truncate();
+
+        User::flushEventListeners();
+        Category::flushEventListeners();
+        Article::flushEventListeners();
+        Sale::flushEventListeners();
+
         $cantidadUsuarios = 10;
-        $cantidadArticulos = 10;
-        $cantidadCategorias = 10;
-        $cantidadClientes = 10;
-        $cantidadVentas = 100;
-        $cantidadVentasDetalles = 3;
-        $categoryController = new CategoryController();
+        $cantidadClientes = 20;
+        $cantidadArticulos = 50;
+        $cantidadCategorias = 20;
+        $cantidadVentas = 20;
+        
 
         factory(User::class, $cantidadUsuarios)->create();
-        factory(User::class)->create(
-            [
-                'name' => 'Administrador', 
-                'email' => 'admin@dopsa.com', 
-                'status' => 'Activo',
-                'password' => bcrypt('secret'),
-            ]
-        );
-        for ($i = 1; $i <= $cantidadCategorias; $i++) {
-           $category = factory(Category::class)->create();
-           factory(Category::class)->create(
-                [
-                    'genericCode' => $categoryController->generationCode($category->genericCode), 
-                    'category' => "Categoria_".$i.".1",
-                    'shortName' =>"Cat_".$i.".1",
-                    'description' => str_random(30),
-                    'level' => 2
-                ]
-           );
-        }  
+        factory(Client::class, $cantidadClientes)->create();
+        factory(Category::class, $cantidadCategorias)->create();
+        factory(Article::class, $cantidadArticulos)->create()->each(
+			function ($articulo) {
+                $categorias = Category::all()->random(mt_rand(1, 5))->pluck('id');
+                $articulo->categories()->attach($categorias);
+			}
+        ); 
         
-        factory(Article::class,$cantidadArticulos)->create()->each(function($article){
-            $article->categories()->attach([
-                Category::inRandomOrder()->first()->id
-            ]);
-        });      
-
-        factory(Client::class,$cantidadClientes)->create();  
-        
-        $sale = factory(Sale::class,$cantidadVentas)->create()->each(function ($sale) {
-            $sale->salesDetails()->save(factory(SaleDetail::class)->make());
-        });
+        factory(Sale::class, $cantidadVentas)->create();
     }
 }

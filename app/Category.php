@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-
+use App\Article;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
@@ -15,4 +15,9 @@ class Category extends Model
         'description',
         'level'
     ];
+
+    public function articles()
+    {
+        return $this->belongsToMany(Article::class);
+    }
 }
