@@ -15,15 +15,15 @@ class CreateArticlesTable extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('internalCode', 12);
-            $table->string('name', 60);
-            $table->char('shortName', 30)->nullable();
-            $table->char('description', 250);
+            $table->string('internalCode',12);
+            $table->string('name',60);
+            $table->char('shortName',20)->nullable();
+            $table->char('description',250);
             $table->integer('stock');
-            $table->decimal('purchasePrice', 18, 2)->nullable();
-            $table->decimal('salePrice', 18, 2);
-            $table->decimal('offerPrice', 18, 2)->nullable();
-            $table->string('status', 12);
+            $table->decimal('purchasePrice',18,2)->nullable();
+            $table->decimal('salePrice',18,2);
+            $table->decimal('offerPrice',18,2)->nullable();
+            $table->string('status',12);
             $table->timestamps();
             
             //$table->unsignedInteger('company_id');

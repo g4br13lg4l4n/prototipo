@@ -36,7 +36,8 @@ class AuthServiceProvider extends ServiceProvider
             'purchase-article' => 'Crear transacciones para comprar productos',
             'manage-products' => 'Crear, ver, actualizar y eliminar productos',
             'manage-account' => 'Obtener información de la cuenta, nombre, email, estado (Sin contraseña), modificar datos como email, nombre y contraseña. No puede eliminar la cuenta',
-            'read-general' => 'Obtener la información en general, categorías en la que se compra y se vende, productos vendidos o comprados, transacciones, compras y ventas'
+            'read-general' => 'Obtener la información en general, categorías en la que se compra y se vende, productos vendidos o comprados, transacciones, compras y ventas',
+            'shop' => 'Obtener lista de productos, y artículos'
         ]);
     }
 }
