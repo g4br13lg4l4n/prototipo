@@ -1,6 +1,11 @@
 <?php
 use App\User;
 use App\Article;
+use App\Category;
+use App\Client;
+use App\Sale;
+use App\SaleDetail;
+use App\Http\Controllers\CategoryController;
 use Faker\Generator as Faker;
 
 /*
@@ -36,5 +41,53 @@ $factory->define(Article::class, function(Faker $faker){
         'salePrice' => 500,
         'offerPrice' => 400,
         'status' => $faker->randomElement(['Visible', 'Borrador', 'Oculto'])
+    ];
+});
+
+$factory->define(Category::class, function(Faker $faker ){
+    $categoryController = new CategoryController();
+    $genericCode = $categoryController->generationCode("");
+    $level = 1;
+    return [
+        'genericCode' => $genericCode,
+        'category' => "Categoria_".$genericCode,
+        'shortName' =>"Cat_".$genericCode,
+        'description' => str_random(30),
+        'level' => $level
+    ];
+});
+
+$factory->define(Client::class, function(Faker $faker ){
+    return [
+        'name' => $faker->name,
+        'lastName' => $faker->lastName,
+        'email' => $faker->unique()->safeEmail,
+        'password' => bcrypt("secret"),
+        'status' =>  $faker->randomElement(['Activo', 'Inactivo',])
+    ];
+});
+
+$factory->define(Sale::class, function(Faker $faker ){
+    return [
+        'folio' => $faker->unique()->numberBetween(1000, 2000),
+        'saleDate'=> $faker->dateTime($max = 'now') ,
+      //  'payDate' =>,
+      //  'cancellationDate' =>,
+        'previousAmount' => 0,
+        'tax' => 0,
+        'amount' => 0,
+        'saleStatus' =>  $faker->randomElement(['Pendiente', 'Pagado',]),
+        'shippingStatus' =>  $faker->randomElement(['En Proceso', 'Entregado',]),
+        'client_id' => Client::inRandomOrder()->first()->id,
+    ];
+});
+
+
+
+$factory->define(SaleDetail::Class, function(Faker $faker){
+    return[
+        'quantity' => $faker->numberBetween(1, 100),
+        'amount'=> $faker->randomFloat($nbMaxDecimals = NULL, $min = 10, $max = NULL), 
+        'article_id' => Article::inRandomOrder()->first()->id,
     ];
 });

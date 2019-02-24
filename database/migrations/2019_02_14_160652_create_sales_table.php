@@ -26,7 +26,8 @@ class CreateSalesTable extends Migration
             $table->string('shippingStatus')->nullable($value = false);
             $table->timestamps();
 
-            $table->unsignedInteger('client_id')->nullable();
+            //$table->unsignedInteger('client_id')->nullable(); /**SE DECLARA EL CAMPO PERO PUEDE SER NULL */
+            $table->unsignedInteger('client_id');
             $table->foreign('client_id')->references('id')->on('clients');
         });
         DB::statement("ALTER TABLE sales ADD CONSTRAINT chk_saleStatus CHECK ( saleStatus IN ('Pendiente','Pagado'));");
