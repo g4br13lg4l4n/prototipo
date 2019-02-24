@@ -57,11 +57,12 @@ $factory->define(Category::class, function(Faker $faker){
 });
 
 $factory->define(Client::class, function(Faker $faker ){
+    static $password;
     return [
         'name' => $faker->name,
         'lastName' => $faker->lastName,
         'email' => $faker->unique()->safeEmail,
-        'password' => bcrypt("secret"),
+        'password' => $password ?: $password = bcrypt('secret'),
         'status' =>  $faker->randomElement(['Activo', 'Inactivo'])
     ];
 });
