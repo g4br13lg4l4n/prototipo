@@ -18,9 +18,9 @@ class ClientPolicy
      * @param  \App\Client  $client
      * @return mixed
      */
-    public function view(User $user, Client $client)
+    public function view(Client $authenticatedClient, Client $client)
     {
-        return $user->id === $client->id;
+        return $authenticatedClient->id === $client->id;
     }
 
     /**
@@ -30,9 +30,9 @@ class ClientPolicy
      * @param  \App\Client  $client
      * @return mixed
      */
-    public function update(User $user, Client $client)
+    public function update(Client $user, Client $client)
     {
-        return $user->id === $client->id;
+        return true;
     }
 
     /**
@@ -42,7 +42,7 @@ class ClientPolicy
      * @param  \App\Client  $client
      * @return mixed
      */
-    public function delete(User $user, Client $client)
+    public function delete(Client $user, Client $client)
     {
         return $user->id === $client->id;
     }
