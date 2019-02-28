@@ -3,11 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Article;
-use App\ArticleImagen;
+use App\ArticleImage;
 use Illuminate\Http\Request;
 
 class ArticleController extends ApiController
 {
+    public function __construct()
+    {
+        $this->middleware('client.credentials')->only(['index', 'show']);
+        $this->middleware('auth:api')->except(['index', 'show']);
+    }
     
     public function index()
     {
@@ -23,14 +28,13 @@ class ArticleController extends ApiController
 
     public function store(Request $request)
     {
-        $file = "";
-        $articleImagen = new ArticleImagen;
 
-        if($request->hasFile('imagen')){
-            $file = $request->file('imagen');
+       // $articleImagen = new ArticleImagen();
+       // if($request->hasFile('imagen')){
+           // $file = $request->file('imagen');
             // $fileName = time().$file->getClientOriginalName();
             //$file->move(public_path().'/articles/',$fileName);        
-        }
+        //}
 
         $rules = [
             'internalCode' => 'required|unique:articles|max:12', 

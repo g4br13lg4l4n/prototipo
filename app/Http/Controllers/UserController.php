@@ -7,6 +7,11 @@ use App\Http\Controllers\ApiController;
 
 class UserController extends ApiController
 {
+    public function __construct()
+    {
+        $this->middleware('client.credentials')->only(['login']);
+        $this->middleware('auth:api')->except(['login']);
+    }
     public function index()
     {
         $usuarios = User::all();
@@ -22,5 +27,16 @@ class UserController extends ApiController
     {
         $user->delete();
         return $this->showOne($user, 201);
+    }
+
+    public function store()
+    {
+
+    }
+
+    public function login (Request $request)
+    {
+        //$credentials = $request->only('email', 'password');
+        return 'holaa';
     }
 }

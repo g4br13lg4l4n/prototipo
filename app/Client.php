@@ -2,10 +2,15 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use SMartins\PassportMultiauth\HasMultiAuthApiTokens;
 
-class Client extends Model
+class Client extends Authenticatable
 {
+    use HasMultiAuthApiTokens, Notifiable;
+
+    protected $guard = 'clients';
     //
     protected $fillable = [
         'name', 
@@ -13,5 +18,9 @@ class Client extends Model
         'email', 
         'password', 
         'status',
+    ];
+
+    protected $hidden = [
+        'password', 'remember_token',
     ];
 }

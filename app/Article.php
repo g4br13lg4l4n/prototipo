@@ -1,7 +1,8 @@
 <?php
 
 namespace App;
-
+use App\Category;
+use App\ArticleImage;
 use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
@@ -21,6 +22,11 @@ class Article extends Model
 
     public function images()
     {
-        return $this->hasMany('App\ArticleImage');
+        return $this->hasMany(ArticleImage::class);
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class);
     }
 }

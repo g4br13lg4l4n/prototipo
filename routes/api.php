@@ -35,3 +35,7 @@ Route::resource('rol','RolController',[
 Route::resource('users', 'User\UserController', [
     'except' => ['create', 'edit']
 ]);
+
+Route::post('users/login', 'User\UserController@login');
+
+Route::post('oauth/token', '\Laravel\Passport\Http\Controllers\AccessTokenController@issueToken');

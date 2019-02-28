@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class CategoryController extends ApiController
 {
+    public function __construct()
+    {
+        $this->middleware('client.credentials')->only(['index', 'show']);
+        $this->middleware('auth:api')->except(['index', 'show']);
+    }
     /**GET */
     public function index()
     {
@@ -22,8 +27,6 @@ class CategoryController extends ApiController
     /**POST */
     public function store(Request $request){
         
-        $_level = 0;
-
         $_genericCode = $this->generationCode( $request->input('parent'));
         $request->request->add(['genericCode' => $_genericCode]);
         
@@ -33,7 +36,7 @@ class CategoryController extends ApiController
         $rules = [
             'genericCode' => 'required|unique:categories',
             'category' => 'required|max:50',
-            'shortName' => 'required|max:20',
+            'shortName' => 'max:20',
             'description' => 'max:150',
             'level' => 'required'
         ];
@@ -46,7 +49,12 @@ class CategoryController extends ApiController
      
     }
     public function destroy(Category $category){
-        
+
+        $categories =  DB::table('categories')
+        ->where('genericCode', 'like', ''.$category->genericCode.'.%')
+        ->delete();
+        $category->delete();
+        return $this->showOne($category);
     }
     public function generationCode($parent)
     {
