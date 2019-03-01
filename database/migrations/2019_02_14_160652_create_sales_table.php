@@ -15,7 +15,7 @@ class CreateSalesTable extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('folio')->unique();
+            $table->integer('folio')->unique();
             $table->dateTime('saleDate');
             $table->dateTime('payDate')->nullable();
             $table->dateTime('cancellationDate')->nullable();

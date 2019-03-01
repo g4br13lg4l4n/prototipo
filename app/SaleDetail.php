@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Sale;
 use Illuminate\Database\Eloquent\Model;
 
 class SaleDetail extends Model
@@ -10,11 +11,16 @@ class SaleDetail extends Model
     
     protected $fillable = [
         'quantity',
-        'amount'
+        'unitPrice',
+        'amount',
     ];
     
     public function sale()
     {
-        return $this->belongsTo('App\Sale');
+        return $this->belongsTo(Sale::class);
+    }
+
+    public function article(){
+        return $this->belongsTo('App\Article');
     }
 }
