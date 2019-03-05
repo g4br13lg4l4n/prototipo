@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateActionsTable extends Migration
+class CreateRolesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,12 @@ class CreateActionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('actions', function (Blueprint $table) {
+        Schema::create('roles', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('action');
-            $table->string('description');
+            $table->string('rol',20);
+            $table->string('description',120);
             $table->char('status',12);
             $table->timestamps();
-
-            $table->unsignedInteger('module_id');
-            $table->foreign('module_id')->references('id')->on('modules');
         });
     }
 
@@ -32,6 +29,6 @@ class CreateActionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('actions');
+        Schema::dropIfExists('roles');
     }
 }

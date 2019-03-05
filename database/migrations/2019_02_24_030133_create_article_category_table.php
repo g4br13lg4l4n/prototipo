@@ -14,6 +14,7 @@ class CreateArticleCategoryTable extends Migration
     public function up()
     {
         Schema::create('article_category', function (Blueprint $table) {
+            $table->increments('id');
             $table->unsignedInteger('category_id');
             $table->unsignedInteger('article_id');
             

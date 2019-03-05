@@ -21,8 +21,8 @@ class CreateCompaniesTable extends Migration
             $table->string('zipCode',6);
             $table->string('colony',20);
             $table->string('street',25);
-            $table->integer('internalNumber');
-            $table->integer('externalNumber');
+            $table->integer('intNum');
+            $table->integer('extNum');
             $table->integer('phone');
             $table->integer('mobile');
             $table->integer('email');
