@@ -84,9 +84,14 @@ $factory->define(Sale::class, function(Faker $faker ){
 
 
 $factory->define(SaleDetail::Class, function(Faker $faker){
+    $article = Article::inRandomOrder()->first();
+    $quantity = $faker->numberBetween(1, 100);
+    $unitPrice = $article->salePrice;
+    $amount = ($quantity * $unitPrice);
     return[
-        'quantity' => $faker->numberBetween(1, 100),
-        'amount'=> $faker->randomFloat($nbMaxDecimals = NULL, $min = 10, $max = NULL), 
-        'article_id' => Article::inRandomOrder()->first()->id,
+        'quantity' => $quantity,
+        'unitPrice' =>  $unitPrice,
+        'amount'=> $amount,
+        'article_id' => $article->id,
     ];
 });

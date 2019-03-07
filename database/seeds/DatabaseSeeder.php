@@ -24,21 +24,24 @@ class DatabaseSeeder extends Seeder
         User::truncate();
         Category::truncate();
         Article::truncate();
+        SaleDetail::truncate();
         Sale::truncate();
+
         DB::table('article_category')->truncate();
 
         User::flushEventListeners();
         Category::flushEventListeners();
         Article::flushEventListeners();
         Sale::flushEventListeners();
+        SaleDetail::flushEventListeners();
 
         $cantidadUsuarios = 10;
         $cantidadClientes = 20;
         $cantidadArticulos = 50;
         $cantidadCategorias = 20;
         $cantidadVentas = 20;
+        $cantidadVentasDetalles = 3;
         
-
         factory(User::class, $cantidadUsuarios)->create();
         factory(Client::class, $cantidadClientes)->create();
         factory(Category::class, $cantidadCategorias)->create();
@@ -48,7 +51,12 @@ class DatabaseSeeder extends Seeder
                 $articulo->categories()->attach($categorias);
 			}
         ); 
+
+        factory(Sale::class, $cantidadVentas)->create()->each(
+            function($sale ){
+                $sale->salesDetails()->save(factory(SaleDetail::class)->make());
+            }
+        );
         
-        factory(Sale::class, $cantidadVentas)->create();
     }
 }

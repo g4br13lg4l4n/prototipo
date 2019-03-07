@@ -1,6 +1,8 @@
 <?php
 
 namespace App;
+use App\SaleDetail;
+use App\Client;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,7 +11,6 @@ class Sale extends Model
     protected $table = 'sales';
     
     protected $fillable = [
-        'id', 
         'folio',
         'saleDate',
         'payDate',
@@ -19,14 +20,16 @@ class Sale extends Model
         'amount',
         'saleStatus',
         'shippingStatus',
+        'client_id'
     ];
 
+    protected $hidden = ['client_id'];
 
     public function salesDetails(){
-        return $this->hasMany('App\SaleDetail');
+        return $this->hasMany(SaleDetail::class);
     }
 
     public function client(){
-        return $this->belongsTo('App\Client');
+        return $this->belongsTo(Client::class);
     }
 }

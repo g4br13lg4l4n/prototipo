@@ -3,6 +3,7 @@
 namespace App;
 use App\Category;
 use App\ArticleImage;
+use App\SaleDetail;
 use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
@@ -24,9 +25,14 @@ class Article extends Model
     {
         return $this->hasMany(ArticleImage::class);
     }
-
     public function categories()
     {
         return $this->belongsToMany(Category::class);
     }
+    public function salesDetails()
+    {
+        return $this->hasMany(SaleDetail::class);
+    }
+
+
 }
