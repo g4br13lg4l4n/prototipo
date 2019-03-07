@@ -2,16 +2,16 @@
 
 namespace App;
 
+use App\Article;
 use Illuminate\Database\Eloquent\Model;
 
 class ArticleImage extends Model
 {
     protected $fillable = [
-        'id', 
         'url'
     ];
     public function article()
     {
-        return $this->belongsTo('App\Article');
+        return $this->belongsTo(Article::class);
     }
 }

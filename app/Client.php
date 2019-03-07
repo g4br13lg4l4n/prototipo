@@ -2,11 +2,11 @@
 
 namespace App;
 
+use App\Sale;
 use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
 {
-    //
     protected $fillable = [
         'name', 
         'lastName', 
@@ -14,4 +14,8 @@ class Client extends Model
         'password', 
         'status',
     ];
+
+    public function sales(){
+        return $this->belongsTo(Sale::class);
+    }
 }
