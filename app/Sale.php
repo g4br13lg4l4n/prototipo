@@ -30,6 +30,6 @@ class Sale extends Model
     }
 
     public function client(){
-        return $this->hasOne(Client::classs);
+        return $this->belongsTo(Client::class);
     }
 }
